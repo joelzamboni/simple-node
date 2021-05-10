@@ -12,6 +12,6 @@ spec:
     spec:
       containers:
       - name: nodejs
-        image: joelzamboni/nodejs-starter:1.0
+        image: joelzamboni/simple-node:latest
         ports:
         - containerPort: 3000
