@@ -2,9 +2,14 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nodejs-deployment
+  name: nodejs
+  labels:
+    app: nodejs
 spec:
   replicas: 2
+  selector:
+    matchLabels:
+      app: nodejs
   template:
     metadata:
       labels:
@@ -13,5 +18,15 @@ spec:
       containers:
       - name: nodejs
         image: joelzamboni/simple-node:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 3000
+        env:
+          - name: DD_AGENT_HOST
+            valueFrom: 
+              fieldRef:
+                fieldPath: status.hostIP
+          - name: DD_ENV
+            value: test
+          - name: DD_SERVICE
+            value: simple-node
